@@ -1,12 +1,7 @@
+import MapsApp from "./MapsApp";
 
 const App = () => {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <h1>Project start</h1>
-            </header>
-        </div>
-    );
+    return (<MapsApp/>);
 }
 
 export default App;
