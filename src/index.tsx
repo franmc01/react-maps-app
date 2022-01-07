@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+if (!navigator.geolocation) {
+    alert('Geolocation is not available');
+    throw new Error('Geolocation is not available');
+}
+
 ReactDOM.render(
     <React.StrictMode>
         <App/>
