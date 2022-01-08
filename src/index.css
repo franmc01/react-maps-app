@@ -6,3 +6,21 @@
     top: 0;
     width: 100%;
 }
+
+
+.btn-location {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.react-logo {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 100px;
+}
