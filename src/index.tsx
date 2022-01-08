@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import MapsApp from "./MapsApp";
 
 if (!navigator.geolocation) {
     alert('Geolocation is not available');
@@ -11,7 +11,7 @@ if (!navigator.geolocation) {
 
 ReactDOM.render(
     <React.StrictMode>
-        <App/>
+        <MapsApp/>
     </React.StrictMode>,
     document.getElementById('root')
 );
