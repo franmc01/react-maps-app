@@ -13,9 +13,6 @@
     top: 1.5rem;
     right: 1.5rem;
     z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .react-logo {
@@ -23,4 +20,15 @@
     bottom: 1.5rem;
     right: 1.5rem;
     width: 100px;
+}
+
+.searchbar-container {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    background-color: #fff;
+    z-index: 1;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    width: 250px;
+    border-radius: 5px;
 }
