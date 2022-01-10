@@ -29,7 +29,7 @@ export const placesReducer = (state: PlacesState, action: PlacesAction): PlacesS
         case 'SET_LOADING_PLACES': {
             return {
                 ...state,
-                isLoading: true,
+                isLoadingPlaces: true,
                 places: []
             }
         }
