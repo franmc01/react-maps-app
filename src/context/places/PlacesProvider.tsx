@@ -4,15 +4,20 @@ import {placesReducer} from "./placesReducer";
 import {getUserLocation} from "../../helpers";
 import {ReactProps} from "../../interfaces";
 import {searchPlacesAPI} from "../../apis";
+import {Feature, PlacesResponse} from "../../interfaces/places";
 
 export interface PlacesState {
     isLoading: boolean;
     userLocation?: [number, number];
+    isLoadingPlaces: boolean;
+    places: Feature[];
 }
 
 const INITIAL_STATE: PlacesState = {
     isLoading: true,
     userLocation: undefined,
+    isLoadingPlaces: true,
+    places: []
 }
 
 export const PlacesProvider = ({children}: ReactProps) => {
@@ -23,7 +28,7 @@ export const PlacesProvider = ({children}: ReactProps) => {
         getUserLocation().then(lngLat => dispatch({type: 'SET_USER_LOCATION', payload: lngLat}))
     }, []);
 
-    const searchPlacesByTerm = async (query: string) => {
+    const searchPlacesByTerm = async (query: string): Promise<Feature[]> => {
         if (query.length === 0) {
             return [];
         }
@@ -32,15 +37,17 @@ export const PlacesProvider = ({children}: ReactProps) => {
             throw new Error("User location not available.");
         }
 
-        const response = await searchPlacesAPI.get(`${query}.json`, {
+        dispatch({type: 'SET_LOADING_PLACES'});
+
+        const response = await searchPlacesAPI.get<PlacesResponse>(`${query}.json`, {
             params: {
                 proximity: state.userLocation.join(',')
             }
         });
 
-        console.log(response.data);
+        dispatch({type: 'SET_PLACES', payload: response.data.features});
 
-        return response.data;
+        return response.data.features;
     }
 
 
