@@ -30,6 +30,7 @@ export const PlacesProvider = ({children}: ReactProps) => {
 
     const searchPlacesByTerm = async (query: string): Promise<Feature[]> => {
         if (query.length === 0) {
+            dispatch({type: 'SET_PLACES', payload: []})
             return [];
         }
 

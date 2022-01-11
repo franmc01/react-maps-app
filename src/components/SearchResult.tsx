@@ -4,10 +4,10 @@ import {Feature} from "../interfaces/places";
 
 export const SearchResult = () => {
 
-    const {places, isLoadingPlaces} = useContext(PlacesContext);
+    const {places} = useContext(PlacesContext);
 
     return (
-        <ul className={(isLoadingPlaces) ? 'list-group' : 'list-group mt-3'}>
+        <ul className={(places.length > 0) ? 'list-group mt-3' : 'list-group'}>
 
             {
                 places.map((place: Feature) => (
