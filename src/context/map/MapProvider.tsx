@@ -1,5 +1,5 @@
 import {MapContext} from "./MapContext";
-import {Map, Marker, Popup} from "mapbox-gl";
+import {LngLatBounds, Map, Marker, Popup} from "mapbox-gl";
 import {useContext, useEffect, useReducer} from "react";
 import {mapReducer} from "./mapReducer";
 import {ReactProps} from "../../interfaces";
@@ -20,7 +20,7 @@ const INITIAL_STATE: MapState = {
 export const MapProvider = ({children}: ReactProps) => {
 
     const [state, dispatch] = useReducer(mapReducer, INITIAL_STATE);
-    const {places} = useContext(PlacesContext);
+    const {places, userLocation} = useContext(PlacesContext);
 
     useEffect(() => {
         state.markers.forEach((marker) => {
@@ -35,13 +35,11 @@ export const MapProvider = ({children}: ReactProps) => {
                 new Popup().setHTML(`<h6>${place.text_es}</h6> <p>${place.place_name_es}</p>`)
             );
             newMarkers.push(newMarker);
+            adjustZoomMap(newMarkers);
         }
 
         dispatch({type: 'SET_MARKERS', payload: newMarkers});
 
-        return () => {
-            console.log(places)
-        };
     }, [places]);
 
 
@@ -52,6 +50,15 @@ export const MapProvider = ({children}: ReactProps) => {
         dispatch({type: 'SET_MAP', payload: map})
     };
 
+    const adjustZoomMap = (newMarkers: Marker[]) => {
+        const bounds = new LngLatBounds();
+        newMarkers.forEach(marker => bounds.extend(marker.getLngLat()));
+        bounds.extend(userLocation!);
+
+        state.map!.fitBounds(bounds, {
+            padding: 200
+        });
+    }
 
     return (
         <MapContext.Provider value={{
