@@ -60,10 +60,15 @@ export const MapProvider = ({children}: ReactProps) => {
         });
     }
 
+    const getRouteBetweenPoints = async(start: [number, number], end: [number, number] ) => {
+
+    }
+
     return (
         <MapContext.Provider value={{
             ...state,
-            setMap
+            setMap,
+            getRouteBetweenPoints
         }}>
             {children}
         </MapContext.Provider>
