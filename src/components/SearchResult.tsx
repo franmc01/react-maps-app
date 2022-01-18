@@ -4,8 +4,8 @@ import {Feature} from "../interfaces/places";
 
 export const SearchResult = () => {
 
-    const {map} = useContext(MapContext);
-    const {places} = useContext(PlacesContext);
+    const {map, getRouteBetweenPoints} = useContext(MapContext);
+    const {places, userLocation} = useContext(PlacesContext);
     const [activePlaceId, setActivePlaceId] = useState<string>('');
 
     const onPlaceClick = (place: Feature) => {
@@ -15,6 +15,13 @@ export const SearchResult = () => {
             zoom: 14,
             center: [lng, lat]
         })
+    }
+
+    const getRoute = async (place: Feature) => {
+        if (!userLocation) return;
+        const [lng, lat] = place.center;
+
+        await getRouteBetweenPoints(userLocation, [lng, lat])
     }
 
     return (
@@ -30,7 +37,9 @@ export const SearchResult = () => {
                         <p style={{fontSize: '12px'}}>
                             {place.place_name}
                         </p>
-                        <button className={`btn btn-sm ${activePlaceId === place.id ? 'btn-outline-light' : 'btn-primary'}`}>
+                        <button
+                            onClick={() => getRoute(place)}
+                            className={`btn btn-sm ${activePlaceId === place.id ? 'btn-outline-light' : 'btn-primary'}`}>
                             Trazar ruta
                         </button>
                     </li>
